@@ -1,3 +1,4 @@
+const bcryptjs = require("bcryptjs");
 const User = require("../model/usermodel.js");
 
 const authController = async (req, res) => {
@@ -5,7 +6,8 @@ const authController = async (req, res) => {
 
   try {
     const { email, password, userName } = req.body;
-    const user = new User({ email, password, userName });
+    const hasedPassword = bcryptjs.hashSync(password, 10);
+    const user = new User({ email, password: hasedPassword, userName });
     //   console.log(user);
 
     await user.save();
