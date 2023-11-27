@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 const { default: mongoose } = require("mongoose");
 const dotenv = require("dotenv");
 const userRouter = require("./routes/user");
@@ -8,6 +9,7 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
+app.use(cors());
 const url = process.env.MONGO_URI;
 mongoose
   .connect(url)
@@ -16,8 +18,8 @@ mongoose
   })
   .catch((e) => console.log(e));
 app.get("/", (req, res) => res.send("Hello World"));
-app.use("/api/users", userRouter);
-app.use("/api/signup", signUpRouter);
+app.use("/api/users", userRouter); //user api
+app.use("/api", signUpRouter); //signup api
 
 // middleware
 app.use((err, req, res, next) => {
