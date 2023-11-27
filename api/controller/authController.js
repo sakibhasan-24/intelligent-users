@@ -1,7 +1,7 @@
 const bcryptjs = require("bcryptjs");
 const User = require("../model/usermodel.js");
 
-const authController = async (req, res) => {
+const authController = async (req, res, next) => {
   //   console.log(req.body);
 
   try {
@@ -13,7 +13,8 @@ const authController = async (req, res) => {
     await user.save();
     res.status(201).json({ message: "user created successfully" });
   } catch (error) {
-    res.status(501).json({ message: error.message });
+    // res.status(501).json({ message: error.message });
+    next(error);
   }
 };
 module.exports = authController;
