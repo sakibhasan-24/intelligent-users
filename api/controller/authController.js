@@ -28,7 +28,7 @@ const loginAuth = async (req, res, next) => {
     if (!validPassword) return next(handleError(404, "User not found"));
     const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
     const { password: hasedPassword, ...rest } = validUser._doc;
-    console.log(rest);
+
     res
       .cookie("access_token", token, { httpOnly: true })
       .status(200)
@@ -37,4 +37,5 @@ const loginAuth = async (req, res, next) => {
     next(error);
   }
 };
+
 module.exports = { authController, loginAuth };

@@ -11,12 +11,14 @@ const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
 const url = process.env.MONGO_URI;
+// connnection
 mongoose
   .connect(url)
   .then(() => {
     console.log("connected");
   })
   .catch((e) => console.log(e));
+
 app.get("/", (req, res) => res.send("Hello World"));
 app.use("/api/users", userRouter); //user api
 app.use("/api", signUpRouter); //signup api

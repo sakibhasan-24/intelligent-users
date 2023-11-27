@@ -1,16 +1,21 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function SIgnUp() {
   const [formData, setFormData] = useState({});
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
+  const navigate = useNavigate();
   const handleFormData = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.id]: e.target.value });
     // console.log(formData);
   };
   const handleSubmitForm = (e) => {
+    setLoading(true);
+    setError(false);
     e.preventDefault();
-    fetch("http://localhost:3000/api/signup/", {
+    fetch("http://localhost:3000/api/signup", {
       method: "POST",
       headers: {
         "content-type": "application/json",
@@ -19,7 +24,18 @@ export default function SIgnUp() {
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log(data + " created successfully");
+        setLoading(false);
+        // console.log(data);
+        if (data.success === false) {
+          setError(true);
+          return;
+        }
+
+        navigate("/login");
+      })
+      .catch((err) => {
+        setLoading(false);
+        setError(true);
       });
   };
   return (
@@ -47,8 +63,11 @@ export default function SIgnUp() {
           className="p-4 rounded-lg bg-slate-200"
           onChange={handleFormData}
         />
-        <button className="bg-slate-700 px-4 py-2 text-white font-bold rounded-lg hover:bg-slate-950">
-          Sign Up
+        <button
+          disabled={loading}
+          className="bg-slate-700 px-4 py-2 text-white font-bold rounded-lg hover:bg-slate-950 disabled:bg-slate-800"
+        >
+          {loading ? "loading" : "sign up"}
         </button>
         <div className="flex gap-2">
           <p>
@@ -59,6 +78,7 @@ export default function SIgnUp() {
           </p>
         </div>
       </form>
+      <p>{error && "something wen wrong"}</p>
     </div>
   );
 }
