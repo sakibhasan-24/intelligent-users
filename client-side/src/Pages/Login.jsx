@@ -1,19 +1,30 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  signInFailure,
+  signInStart,
+  signInSuccess,
+} from "../redux/userStorage";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Login() {
   const [formData, setFormData] = useState({});
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(false);
+  // const [loading, setLoading] = useState(false);
+  // const [error, setError] = useState(false);
+  const { loading, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleFormData = (e) => {
     e.preventDefault();
     setFormData({ ...formData, [e.target.id]: e.target.value });
     // console.log(formData);
   };
   const handleSubmitForm = (e) => {
-    setLoading(true);
-    setError(false);
+    // setLoading(true);
+    // setError(false);
+    // ----------------------redux will used----------------------------
+
+    dispatch(signInStart()); //set loading true
     e.preventDefault();
     fetch("http://localhost:3000/api/login", {
       method: "POST",
@@ -24,19 +35,25 @@ export default function Login() {
     })
       .then((res) => res.json())
       .then((data) => {
-        setLoading(false);
+        // setLoading(false);
+
         if (data.success === false) {
-          setError(true);
+          // setError(true);
+          // console.log(data);
+          dispatch(signInFailure(data.message));
           return;
         }
+        dispatch(signInSuccess(data));
         navigate("/");
         // console.log(data + " created successfully");
       })
       .catch((err) => {
-        setLoading(false);
-        setError(true);
+        // setLoading(false);
+        // setError(true);
+        dispatch(signInFailure(err));
       });
   };
+
   return (
     <div className="p-2 max-w-2xl mx-auto ">
       <h1 className="font-bold text-4xl text-center my-6">Login</h1>
