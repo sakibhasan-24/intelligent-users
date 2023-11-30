@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import GoogleButton from "../components/GoogleButton";
 
 export default function SIgnUp() {
   const [formData, setFormData] = useState({});
@@ -69,6 +70,7 @@ export default function SIgnUp() {
         >
           {loading ? "loading" : "sign up"}
         </button>
+        <GoogleButton />
         <div className="flex gap-2">
           <p>
             already have an account?{" "}

@@ -22,7 +22,7 @@ mongoose
 app.get("/", (req, res) => res.send("Hello World"));
 app.use("/api/users", userRouter); //user api
 app.use("/api", signUpRouter); //signup api
-
+// app.use("/api");
 // middleware
 app.use((err, req, res, next) => {
   const statusCode = err.statusCode || 500;

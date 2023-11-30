@@ -6,6 +6,7 @@ import {
   signInSuccess,
 } from "../redux/userStorage";
 import { useDispatch, useSelector } from "react-redux";
+import GoogleButton from "../components/GoogleButton";
 
 export default function Login() {
   const [formData, setFormData] = useState({});
@@ -78,6 +79,7 @@ export default function Login() {
         >
           {loading ? "loading" : "sign up"}
         </button>
+        <GoogleButton />
         <div className="flex gap-2">
           <p>
             dont's have an account?{" "}
