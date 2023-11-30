@@ -6,6 +6,7 @@ import About from "./Pages/About";
 import SIgnUp from "./Pages/SIgnUp";
 import Login from "./Pages/Login";
 import HomeComponent from "./HomeComponent";
+import Private from "./components/Private";
 
 export default function App() {
   const router = createBrowserRouter([
@@ -13,10 +14,17 @@ export default function App() {
       path: "/",
       element: <HomeComponent />,
       children: [
-        { path: "/profile", element: <Profile /> },
         { path: "/about", element: <About /> },
         { path: "/signup", element: <SIgnUp /> },
         { path: "/login", element: <Login /> },
+        {
+          path: "/profile",
+          element: (
+            <Private>
+              <Profile />
+            </Private>
+          ),
+        },
       ],
     },
   ]);

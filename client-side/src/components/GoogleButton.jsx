@@ -12,7 +12,7 @@ export default function GoogleButton() {
       const result = await signInWithPopup(auth, googleProvider);
       //   console.log(result.user);
       //   store data in mongodb
-      fetch("http://localhost:3000/api/google/", {
+      await fetch("http://localhost:3000/api/google", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -25,7 +25,7 @@ export default function GoogleButton() {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log(data);
+          //   console.log(data);
           dispatch(signInSuccess(data));
         });
     } catch (error) {

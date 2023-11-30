@@ -62,12 +62,13 @@ const googleLogIn = async (req, res, next) => {
       const hashedPassword = bcryptjs.hashSync(generatedPassword, 10);
       const newUser = new User({
         email: req.body.email,
-        name:
+        userName:
           req.body.name.split(" ").join("").toLowerCase() +
-          Math.random().toString().slice(-8),
+          Math.random().toString().slice(-4),
         profilePicture: req.body.photo,
         password: hashedPassword,
       });
+      // console.log(newUser);
       await newUser.save();
       const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET);
       const { password: hasedPassword, ...rest } = newUser;
