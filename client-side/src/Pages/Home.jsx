@@ -21,7 +21,7 @@ export default function Home() {
                 // src="https://lh3.googleusercontent.com/a/ACg8ocISpLo3wfgTRfrwd1TtibHuVrA8Q1m1tsXqXqzux3MJ=s96-c"
                 src={currentUser.profilePicture}
                 className="h-7 w-7 rounded-full object-cover"
-                alt=""
+                alt="profile image"
               />
             </Link>
           ) : (
