@@ -88,6 +88,20 @@ export default function Profile() {
           onClick={() => fileRef.current.click()}
           className="h-20 w-20 cursor-pointer self-center rounded-full object-cover"
         />
+        {/* image upload conditional */}
+        {imageError ? (
+          <p className="text-center text-red-500 font-semibold">
+            image is not uploaded
+          </p>
+        ) : imageProgress > 0 && imageProgress < 100 ? (
+          <p className="text-center text-green-700 font-bold">{`image upload ${imageProgress} %`}</p>
+        ) : imageProgress === 100 ? (
+          <p className="text-center text-green-600 font-bold">
+            image Uploaded Successfully
+          </p>
+        ) : (
+          ""
+        )}
         <input
           type="text"
           id="userName"

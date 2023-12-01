@@ -4,12 +4,14 @@ const { default: mongoose } = require("mongoose");
 const dotenv = require("dotenv");
 const userRouter = require("./routes/user");
 const signUpRouter = require("./routes/authRoute");
+const cookieParser = require("cookie-parser");
 
 dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 app.use(express.json());
 app.use(cors());
+app.use(cookieParser());
 const url = process.env.MONGO_URI;
 // connnection
 mongoose
